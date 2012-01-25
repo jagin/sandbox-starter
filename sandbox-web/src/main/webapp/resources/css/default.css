@@ -1,0 +1,103 @@
+body {
+	margin: 0;
+	padding: 0;
+    background-color: #5c6066;
+    font-family: Verdana, sans-serif;
+    font-size: 0.9em;
+}
+
+div#container {
+    margin: 0px auto;
+    width: 960px;
+    background: #FFFFFF;
+}
+
+div#header {
+	padding: 4px;
+    height: 80px;
+    background-color: #eeeeee;
+}
+
+div#header-menu {
+    float: right;
+}
+
+div#title {
+    padding: 14px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+div#sidebar {
+	width: 180px;
+    float: left;
+    padding: 4px;
+}
+
+div#content {
+	width: 760px;
+	float: left;
+    padding: 4px;
+}
+
+div#footer {
+	padding: 4px;
+    height: 40px;
+    background-color: #eeeeee;
+}
+
+label {
+	padding-right: 2px;
+}
+
+#content .buttons {
+	display: block;
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+
+#content .button, #content .buttons a {
+	margin-top: 5px;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 5px;
+	color: #5b5b5b;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-decoration: none;
+	border-top: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #bbbbbb;
+	border-bottom: 1px solid #bbbbbb;
+	border-radius: 5px;
+	background-color: #eeeeee;
+	vertical-align: middle;
+}
+
+#content .button:hover, #content .buttons a:hover {
+	background-color: #d2e8f2;
+}
+
+/*
+ * A new micro clearfix hack
+ * http://nicolasgallagher.com/micro-clearfix-hack/
+ */
+
+/* For modern browsers */
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+
+.clearfix:after {
+    clear:both;
+}
+
+/* For IE 6/7 (trigger hasLayout) */
+.clearfix {
+    zoom:1;
+}

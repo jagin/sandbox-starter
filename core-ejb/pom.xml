@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pl.jagin.sandbox</groupId>
+        <artifactId>sandbox</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sandbox-core-ejb</artifactId>
+    <packaging>ejb</packaging>
+    <name>Sandbox core EJB module</name>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- FEST is a collection of APIs whose mission is to simplify software testing -->
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>${fest.assert.version}</version>
+            <scope>test</scope>
+        </dependency>        
+        
+        <!-- Commons Lang, a package of Java utility classes for the classes that 
+            are in java.lang's hierarchy, or are considered to be so standard as to justify 
+            existence in java.lang -->
+        <!-- The standard Java libraries fail to provide enough methods for manipulation
+            of its core classes. Apache Commons Lang provides these extra methods.
+            Lang provides a host of helper utilities for the java.lang API, 
+            notably String manipulation methods, basic numerical methods,
+            object reflection, concurrency, creation and serialization and System properties.
+            Additionally it contains basic enhancements to java.util.Date and a series
+            of utilities dedicated to help with building methods, such as hashCode,
+            toString and equals. -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>  
+        
+        <!-- Declare the APIs we depend on and need for compilation. All of 
+            them are provided by JBoss AS -->
+
+        <!-- Import the EJB API, we use provided scope as the API is included 
+            in JBoss AS -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the CDI API, we use provided scope as the API is included 
+            in JBoss AS -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Solder -->
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>        
+      
+    </dependencies>
+    
+    <build>
+        <!--
+        <filters>
+            <filter>src/main/filters/filter-${environment}.properties</filter>
+        </filters>
+        -->
+
+        <!-- Warning: Do not filter files with binary content like images! This 
+            will most likely result in corrupt output. If you have both text files and
+            binary files as resources, you need to declare two mutually exclusive resource 
+            sets. The first resource set defines the files to be filtered and the other 
+            resource set defines the files to copy unaltered as illustrated below: -->
+        <!-- see: http://sonatype.com/books/maven-book/reference/resource-filtering.html -->
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+        
+        <plugins>
+            <plugin>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>${maven-ejb-plugin.version}</version>
+                <configuration>
+                    <!-- Tell Maven we are using EJB 3.1 -->
+                    <ejbVersion>3.1</ejbVersion>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>                         
+                    </archive>                    
+                </configuration>
+            </plugin>
+        </plugins>
+        
+    </build>
+
+</project>

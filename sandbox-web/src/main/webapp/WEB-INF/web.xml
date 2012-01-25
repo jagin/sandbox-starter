@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- An optional parameter that makes troubleshooting errors much easier -->
+	<!-- You should remove this context parameter before deploying to production! -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	
+	<!-- Enables the ui:debug facelets tag -->
+	<context-param>
+		<param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+	    <param-name>com.sun.faces.enableMissingResourceLibraryDetection</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+
+	<!-- JSF 2.0 Servlet activates automatically when the WEB-INF/faces-config.xml 
+		descriptor is present -->
+
+    <!-- JSF mapping 
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet> -->
+
+    <!-- Map these files with JSF 
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping> -->
+
+    <!--  XML comments will be skipped -->
+	<context-param>
+	    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+
+	<!-- Generally when you use the JSF framework and look inside the HTML output you will find that clientId is separated by a colon sign ":".
+		Firefox  does  not  properly  associate  a  label  with  the  target  input  if  the input  id  contains  the  colon.
+		Also this sign is not allowed when you use the jQuery library because it is reserved for jQuery selectors.
+		JavaServer Faces 2.0 comes with a parameter: javax.faces.SEPARATOR_CHAR. In this case you should change default separator to another one 
+		which is accepted by jQuery.
+	<context-param>
+	    <param-name>javax.faces.SEPARATOR_CHAR</param-name>
+	    <param-value>-</param-value>
+	</context-param> -->
+
+	<!-- This section is optional. We are allowing index.jsf to handle the root 
+		URL (i.e., /). -->
+	<welcome-file-list>
+		<!-- Add additional files here, if desired, for example: <welcome-file>index.html</welcome-file> -->
+		<welcome-file>index.html</welcome-file>
+		<!--welcome-file>/faces/welcome.xhtml</welcome-file-->
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/faces/error404.xhtml</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/faces/error500.xhtml</location>
+	</error-page>
+  		
+</web-app>

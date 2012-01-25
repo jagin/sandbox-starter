@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>pl.jagin.sandbox</groupId>
+		<artifactId>sandbox</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>sandbox-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>Sandbox EAR module</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>pl.jagin.sandbox</groupId>
+			<artifactId>sandbox-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	
+		<dependency>
+			<groupId>pl.jagin.sandbox</groupId>
+			<artifactId>sandbox-core-ejb</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>sandbox-ear</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>${maven-ear-plugin.version}</version>
+				<configuration>
+					<displayName>Sandbox</displayName>
+					<description>Sample JEE6 application</description>				
+					<version>6</version> <!-- Java EE 6 -->
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>pl.jagin.sandbox</groupId>
+							<artifactId>sandbox-web</artifactId>
+							<contextRoot>/sandbox</contextRoot>
+							<bundleFileName>sandbox-web.war</bundleFileName>
+							<unpack>true</unpack>
+						</webModule>
+						<ejbModule>
+							<groupId>pl.jagin.sandbox</groupId>
+							<artifactId>sandbox-core-ejb</artifactId>
+							<bundleFileName>sandbox-core-ejb.jar</bundleFileName>
+						</ejbModule>
+					</modules>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>                         
+                    </archive>  				
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,210 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+  
+    <groupId>pl.jagin.sandbox</groupId>
+    <artifactId>sandbox</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+  
+    <name>Sandbox</name>
+    
+    <modules>
+        <module>core-ejb</module>   
+        <module>sandbox-web</module>
+        <module>sandbox-ear</module>
+    </modules>    
+  
+    <developers>
+        <developer>
+            <id>jgilewski</id>
+            <name>Jarosław Gilewski</name>
+            <email>jgilewski@jagin.pl</email>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+            <timezone>UTC+1</timezone>
+        </developer>
+    </developers>
+  
+    <properties>
+        <!-- default encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <!-- Maven plugins -->
+        <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
+        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-ejb-plugin.version>2.3</maven-ejb-plugin.version>
+        <maven-ear-plugin.version>2.6</maven-ear-plugin.version>
+        
+        <!-- Dependency library versions -->
+        <commons-lang3.version>3.1</commons-lang3.version>
+        <!--slf4j.version>1.6.4</slf4j.version--> 
+        <junit.version>4.8.1</junit.version>
+        <fest.assert.version>1.4</fest.assert.version>
+        
+        <!-- To specify the JBoss AS directory the "Maven way", set the jboss.home property in an active profile in $HOME/.m2/settings.xml -->
+        <!-- By default, we assign it to the value of the JBOSS_HOME envrionment variable -->
+        <jboss.home>${env.JBOSS_HOME}</jboss.home> 
+        
+        <!-- Java EE 6.0 APIs version for use with JBoss AS -->
+        <!-- Define the version of JBoss' Java EE 6 APIs we want to import. 
+            Any dependencies from org.jboss.spec will have their version defined by this 
+            BOM -->        
+        <jboss-javaee-6.0.version>2.0.0.Final</jboss-javaee-6.0.version>
+        
+        <prettyfaces-jsf2.version>3.3.2</prettyfaces-jsf2.version>
+        
+        <seam.version>3.1.0.Final</seam.version>
+        <weld.version>1.1.4.Final</weld.version>
+        
+    </properties>  
+
+    <repositories>
+        <!-- The JBoss Community public repository is a composite repository of several major repositories -->
+        <!-- see http://community.jboss.org/wiki/MavenGettingStarted-Users -->
+        <!-- At the time of writing, Arquillian and the JBoss Java EE specification POMs are only in the JBoss Community public
+                    repository (not Maven central) -->
+        <repository>
+            <id>jboss-public-repository</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public</url>
+            <!-- These optional flags are designed to speed up your builds by reducing remote server calls -->
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+        
+        <repository>
+                 <id>prime-repository</id>
+                 <name>Prime Repository</name>
+                 <url>http://repository.primefaces.org</url>
+        </repository>        
+    </repositories>  
+   
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jboss-public-repository</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public</url>
+            <!-- These optional flags are designed to speed up your builds by reducing remote server calls -->
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <!-- Set to true to fix error in which Maven cannot find org.apache.maven.plugins:maven-archetype-plugin:maven-plugin:2.0-alpha-6-SNAPSHOT -->
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories> 
+    
+    <!-- dependencyManagement: is used by POMs to help manage dependency information 
+        across all of its children. If the my-parent project uses dependencyManagement 
+        to define a dependency on junit:junit:4.0, then POMs inheriting from this 
+        one can set their dependency giving the groupId=junit and artifactId=junit 
+        only, then Maven will fill in the version set by the parent. The benefits 
+        of this method are obvious. Dependency details can be set in one central 
+        location, which will propagate to all inheriting POMs. In addition, the version 
+        and scope of artifacts which are incorporated from transitive dependencies 
+        may also be controlled by specifying them in a dependency management section. -->
+    <dependencyManagement>
+        <dependencies>           
+            
+            <!-- JBoss distributes a complete set of Java EE 6 APIs including 
+                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or 
+                a collection) of artifacts. We use this here so that we always get the correct 
+                versions of artifacts. -->
+            <!-- We strongly recommend that you do not use the Java EE API artifact with coordinates javax:javaee-api.
+                That bundle contains classes with stripped method bodies, which will cause your application to throw
+                strange Absent Code errors if left on the classpath at runtime (even when running tests).
+                Read this FAQ (http://community.jboss.org/wiki/WhatsTheCauseOfThisExceptionJavalangClassFormatErrorAbsentCode)
+                if you want more background. -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-6.0</artifactId>
+                <version>${jboss-javaee-6.0.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+             <!-- JBoss distributes a complete set of Java EE 6 APIs including 
+                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or 
+                a collection) of artifacts. We use this here so that we always get the correct 
+                versions of artifacts. Here we use the jboss-javaee-web-6.0 stack (you can 
+                read this as the JBoss stack of the Java EE Web Profile 6 APIs)
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-web-6.0</artifactId>
+                <version>2.0.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>    
+            -->
+           
+            <!-- Weld Core "bill of materials" which can be imported by any project using
+            	the Weld implementation of CDI. It provides dependency management for the implementation. -->
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+                <version>${weld.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+
+            </dependency>
+           
+            <dependency>
+                <groupId>org.jboss.seam</groupId>
+                <artifactId>seam-bom</artifactId>
+                <version>${seam.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>   
+            
+        </dependencies>
+    </dependencyManagement>    
+  
+    <build>
+        <!-- pluginManagement: is an element that is seen along side plugins. Plugin 
+            Management contains plugin elements in much the same way, except that rather 
+            than configuring plugin information for this particular project build, it 
+            is intended to configure project builds that inherit from this one. However, 
+            this only configures plugins that are actually referenced within the plugins 
+            element in the children. The children have every right to override pluginManagement 
+            definitions. -->
+        <pluginManagement />
+        
+        <plugins>
+            <!-- Enabling and configuring regular resources filtering. See also section "resources" -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>  
+
+</project>

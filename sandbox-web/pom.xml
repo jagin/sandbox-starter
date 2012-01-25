@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+            
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>pl.jagin.sandbox</groupId>
+        <artifactId>sandbox</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>sandbox-web</artifactId>
+    <packaging>war</packaging>
+    <name>Sandbox web module</name>
+    
+    <dependencies>
+    
+        <dependency>
+            <groupId>pl.jagin.sandbox</groupId>
+            <artifactId>sandbox-core-ejb</artifactId>
+            <version>${project.version}</version>
+            <!--scope>provided</scope-->
+            <type>ejb</type>
+        </dependency>          
+        
+        <!-- Import the CDI API, we use provided scope as the API is included 
+           in JBoss AS -->
+        <dependency>
+           <groupId>javax.enterprise</groupId>
+           <artifactId>cdi-api</artifactId>
+           <scope>provided</scope>
+        </dependency>
+        
+        <!-- JSF -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>        
+        
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency> 
+        
+        <!-- Import the EJB API, we use provided scope as the API is included 
+            in JBoss AS -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>               
+        
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet.jstl</groupId>
+            <artifactId>jboss-jstl-api_1.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Solder -->
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency> 
+        
+        <!-- PrettyFaces is an OpenSource Filter-based Servlets extension with enhanced support 
+            for JavaServer Faces – JSF 1.1, 1.2 and 2.0 – enabling creation of bookmark-able, pretty URLs. -->
+        <dependency>
+            <groupId>com.ocpsoft</groupId>
+            <artifactId>prettyfaces-jsf2</artifactId>
+            <version>${prettyfaces-jsf2.version}</version>
+        </dependency>
+                
+        <!-- Seam International -->
+		<dependency>
+			<groupId>org.jboss.seam.international</groupId>
+			<artifactId>seam-international</artifactId>
+			<scope>compile</scope>
+		</dependency>
+        <!-- Activate Joda-Time for i18n -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        
+        <!-- Seam Faces -->
+		<dependency>
+			<groupId>org.jboss.seam.faces</groupId>
+			<artifactId>seam-faces</artifactId>
+			<scope>runtime</scope>
+		</dependency>        
+        
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+        
+    </build>
+    
+</project>

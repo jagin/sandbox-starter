@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+        http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+   <!-- This descriptor activates the JSF 2.0 Servlet -->
+
+   <!-- Write your navigation rules here. You are encouraged to use CDI for 
+      creating @Named managed beans. -->
+      
+    <name>sandbox</name>
+
+	<application>
+		<!--locale-config>
+			<default-locale>en_US</default-locale>
+			<supported-locale>en_US</supported-locale>
+			<supported-locale>pl_PL</supported-locale>
+		</locale-config-->
+			
+		<!-- With the new JSF 2.0 style <resource-bundle> declaration in faces-config.xml, 
+			you don't need <f:loadBundle> in the views anymore. All text will be directly 
+			available by #{messages} in all views --> 	
+		<resource-bundle>
+			<base-name>resources</base-name>
+			<var>resources</var>
+		</resource-bundle>
+		
+		<!-- The message-bundle is to be used whenever you want to override JSF 
+			default warning/error messages which is been used by the JSF validation/conversion 
+			stuff. -->		
+		<message-bundle>messages</message-bundle>
+		
+	</application>    
+	
+	<!-- Allways use POST-REDIRECT-GET pattern (PRG for short).
+		The rules of the pattern are as follows:
+    		Never show pages in response to POST
+    		Always load pages using GET
+    		Navigate from POST to GET using REDIRECT
+    		
+    		See: http://blogs.oracle.com/enterprisetechtips/entry/post_redirect_get_and_jsf
+    			 http://java.dzone.com/articles/bookmarkability-jsf-2
+    -->
+	
+</faces-config>

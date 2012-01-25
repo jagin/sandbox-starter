@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	locale="#{localeBean.currentLocale}">
+	
+<html>
+
+<h:head>
+	<title>Sandbox</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+	<h:outputStylesheet library="css" name="default.css" />
+</h:head>
+
+<h:body>
+	<div id="container">
+		<div id="header">
+			<div id="title">Sandbox</div>
+			<div id="header-menu">
+				<h:form>
+					<h:outputLabel for="locale" value="#{resources['label.selectlocale']}" />
+					<h:selectOneMenu id="locale" value="#{localeBean.currentLocale}">
+						<f:selectItems value="#{localeBean.availableLocales}" var="locale"
+							itemLabel="#{locale.getDisplayName(localeBean.currentLocale)}"
+							itemValue="#{locale}" />
+						<f:converter converterId="localeConverter" />
+						<f:ajax event="change" render="@all" />
+					</h:selectOneMenu>					
+				</h:form>
+			</div>
+		</div>
+
+		<div id="body" class="clearfix">
+
+			<div id="sidebar">
+			    <div class="menuitem">
+			    	<h:link value="Home" outcome="/home" />
+			    </div>
+			    <div class="menuitem">
+			        <a href="#{request.contextPath}/hello">Hello servlet</a>
+			    </div>		
+			</div>
+	
+			<div id="content">
+				<h:messages id="messages" globalOnly="true"/>
+				<p>#{resources['message.welcome']}</p>
+			</div>
+		</div>
+
+		<div id="footer">
+			<ui:fragment rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}">
+				<ui:debug hotkey="x" />
+				<h:outputText value="Jsf Debug (Ctrl+Shift+x)" /> | 
+				<h:outputText value="Conversation: #{javax.enterprise.context.conversation.transient ? 'transient' : 'long running, id = '.concat(javax.enterprise.context.conversation.id)}" />
+			</ui:fragment>
+		</div>
+				
+	</div>
+</h:body>
+
+</html>
+
+</f:view>
