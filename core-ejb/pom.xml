@@ -70,12 +70,12 @@
         <dependency>
             <groupId>org.jboss.solder</groupId>
             <artifactId>solder-api</artifactId>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.solder</groupId>
             <artifactId>solder-impl</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
         </dependency>        
       
     </dependencies>

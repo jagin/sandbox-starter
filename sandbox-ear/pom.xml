@@ -28,6 +28,15 @@
 			<version>${project.version}</version>
 			<type>ejb</type>
 		</dependency>
+		
+		<!-- Solder needs to be in EAR and nowhere else. That can be a problem
+		if you need servlet CDI support. In that case you need
+		to extract Web fragment from solder and put it in your war-->
+		<dependency>
+			<groupId>org.jboss.solder</groupId>
+			<artifactId>solder-impl</artifactId>
+		</dependency>
+				
 	</dependencies>
 	
 	<build>
@@ -40,7 +49,11 @@
 				<configuration>
 					<displayName>Sandbox</displayName>
 					<description>Sample JEE6 application</description>				
-					<version>6</version> <!-- Java EE 6 -->
+					<!-- Tell Maven we are using Java EE 6 -->
+					<version>6</version>
+					<!-- Use Java EE ear libraries as needed. Java EE ear libraries are 
+						in easy way to package any libraries needed in the ear, and automatically 
+						have any modules (EJB-JARs and WARs) use them -->
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<webModule>
@@ -64,6 +77,19 @@
                     </archive>  				
 				</configuration>
 			</plugin>
+			
+			<!-- The JBoss AS plugin deploys your ear to a local JBoss AS container -->
+			<!-- Due to Maven's lack of intelligence with EARs we need to configure 
+				the jboss-as maven plugin to skip deployment for all modules. We then enable 
+				it specifically in the ear module. -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.0.2.Final</version>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>			
 		</plugins>
 	</build>
 
