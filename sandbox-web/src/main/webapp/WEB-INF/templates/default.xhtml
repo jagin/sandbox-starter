@@ -38,6 +38,7 @@
 
 
 		<div id="body" class="clearfix">
+
 			<div id="sidebar">
 				<ui:insert name="sidebar" />
 			</div>
@@ -51,6 +52,7 @@
 			<ui:fragment rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}">
 				<ui:debug hotkey="x" />
 				<h:outputText value="Jsf Debug (Ctrl+Shift+x)" /> | 
+				<h:outputText value="Conversation: #{javax.enterprise.context.conversation.transient ? 'transient' : 'long running, id = '.concat(javax.enterprise.context.conversation.id)}" />
 			</ui:fragment>
 		</div>
 				
